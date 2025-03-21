@@ -1,0 +1,67 @@
+#include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+bool check(char *guess, char *word);
+int main(void)
+
+{
+    char *words[] = {"berry", "power", "cheat"};
+    srand(time(NULL));
+    string rdm_word = words[rand() % 3];
+    printf("the word is %s\n", rdm_word); // print the actual random word for checking
+    for (int k = 0; k < 5; k++)
+    {
+        char *input = get_string("Enter your guess: ");
+        if (strcmp(input, rdm_word) != 0)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                bool E = check(input + i, rdm_word);
+                if (input[i] == rdm_word[i])
+                {
+                    printf("G");
+                }
+                else if (E)
+                {
+                    printf("Y");
+                }
+                else
+                {
+                    printf("_");
+                }
+            }
+            if (k != 4)
+            {
+
+                printf("\nwrong, the remaining atempts are %i\n", 4 - k);
+            }
+            else
+            {
+                printf("game over \n");
+            }
+        }
+        else
+        {
+            printf("correct\n");
+            break;
+        }
+    }
+}
+
+bool check(char *guess, char *word)
+{
+    // checking if letters exist in the random word
+
+    for (int j = 0; j < 5; j++)
+    {
+        if (word[j] == *guess)
+        {
+            return true;
+        }
+    }
+    return false;
+}
